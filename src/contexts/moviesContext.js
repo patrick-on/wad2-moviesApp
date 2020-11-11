@@ -21,7 +21,6 @@ const reducer = (state, action) => {
               : m
           ),
         };
-      break;
     default:
       return state;
   }
