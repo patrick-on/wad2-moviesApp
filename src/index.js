@@ -12,6 +12,8 @@ import GenresContextProvider from "./contexts/genresContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import UpcomingMoviesContextProvider from "./contexts/upcomingMoviesContext";
 import upcomingMovies from "./pages/upcomingMovies";
+import MoviesNowPlayingContextProvider from "./contexts/moviesNowPlayingContext";
+import moviesNowPlayingPage from "./pages/moviesNowPlayingPage";
 
 const App = () => {
   return (
@@ -21,16 +23,19 @@ const App = () => {
         <div className="container-fluid">
           <MoviesContextProvider>
             <GenresContextProvider>
-              <UpcomingMoviesContextProvider>   
+              <UpcomingMoviesContextProvider>
+              <MoviesNowPlayingContextProvider>  
                 <Switch>
                   <Route exact path="/reviews/form" component={AddMovieReviewPage} />
                   <Route path="/reviews/:id" component={MovieReviewPage} />
                   <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
                   <Route exact path="/movies/upcoming" component={upcomingMovies} />
+                  <Route exact path="/movies/playing" component={moviesNowPlayingPage} />
                   <Route path="/movies/:id" component={MoviePage} />
                   <Route path="/" component={HomePage} />
                   <Redirect from="*" to="/" />
                 </Switch>
+              </MoviesNowPlayingContextProvider>  
               </UpcomingMoviesContextProvider>   
             </GenresContextProvider>   
           </MoviesContextProvider>
