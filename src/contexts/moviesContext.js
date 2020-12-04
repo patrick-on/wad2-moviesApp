@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useReducer } from "react";
-import { getMovies, getUpcomingMovies } from "../api/tmdb-api";
+import { getMovies, getUpcomingMovies, getTopRatedMovies, getMoviesNowPlaying } from "../api/tmdb-api";
 
 export const MoviesContext = createContext(null);
 
@@ -11,12 +11,20 @@ const reducer = (state, action) => {
           m.id === action.payload.movie.id ? { ...m, favorite: true } : m
         ),
         upcoming: [...state.upcoming],
+
+       
       };
+    
     case "load":
-      return { movies: action.payload.movies, upcoming: [...state.upcoming] };
+      return { movies: action.payload.movies, upcoming: [...state.upcoming], upcoming: [...state.upcoming], toprated: [...state.toprated], nowplaying: [...state.nowplaying] };
     case "load-upcoming":
-      return { upcoming: action.payload.movies, movies: [...state.movies] };
-    case "add-review":
+      return { upcoming: action.payload.movies, movies: [...state.movies], toprated: [...state.toprated], nowplaying: [...state.nowplaying] };
+    case "load-toprated":
+      return { toprated: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming], nowplaying: [...state.nowplaying] };
+    case "load-nowplaying":
+      return { nowplaying: action.payload.movies, movies: [...state.movies], upcoming: [...state.upcoming], toprated: [...state.toprated] };
+   
+      case "add-review":
       return {
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id
@@ -31,7 +39,7 @@ const reducer = (state, action) => {
 };
 
 const MoviesContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [] });
+  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], toprated: [], nowplaying: [] });
 
   const addToFavorites = (movieId) => {
     const index = state.movies.map((m) => m.id).indexOf(movieId);
@@ -56,11 +64,27 @@ const MoviesContextProvider = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    getTopRatedMovies().then((movies) => {
+        dispatch({ type: "load-toprated", payload: { movies } });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    getMoviesNowPlaying().then((movies) => {
+      dispatch({ type: "load-nowplaying", payload: { movies } });
+  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <MoviesContext.Provider
       value={{
         movies: state.movies,
         upcoming: state.upcoming,
+        toprated: state.toprated,
+        nowplaying: state.nowplaying,
         addToFavorites: addToFavorites,
         addReview: addReview,
       }}

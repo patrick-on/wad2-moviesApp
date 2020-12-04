@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import PageTemplate from '../components/templateMovieListPage'
-import {MoviesNowPlayingContext} from '../contexts/moviesNowPlayingContext'
+import {MoviesContext} from '../contexts/moviesContext'
 import AddToWatchlist from '../components/buttons/addToWatchlist'
 
-const MovieListPage = () => {
-  const context = useContext(MoviesNowPlayingContext);
-  const movies = context.movies.filter((m) => {  // New
+const NowPlayingMovieListPage = () => {
+  const context = useContext(MoviesContext);
+  const movies = context.nowplaying.filter((m) => {  // New
     return !("favorite" in m);
   });
 
@@ -13,11 +13,11 @@ const MovieListPage = () => {
     <PageTemplate
       title="Movies Now Playing"
       movies={movies}  /* Changed */
-      action={(movie) => {
-        return <AddToWatchlist movie={movie} />;
+      action={(nowplaying) => {
+        return <AddToWatchlist movie={nowplaying} />;
       }}
     />
   );
 };
 
-export default MovieListPage;
+export default NowPlayingMovieListPage;
