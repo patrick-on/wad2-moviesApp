@@ -26,5 +26,5 @@ Name: Patrick O Neill (20085099)
 + /movies/toprated - displays the movies currently playing.
 
 
-[nowplaying]: ./public/nowplaying.png
-[toprated]: ./public/toprated.png
+[nowplaying]: ./public/nowplaying.PNG
+[toprated]: ./public/toprated.PNG
