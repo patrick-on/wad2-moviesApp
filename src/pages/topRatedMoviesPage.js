@@ -5,16 +5,16 @@ import AddToWatchListButton from "../components/buttons/addToWatchlist";
 
 const TopRatedMovieListPage = () => {
   const context = useContext(MoviesContext);
-  const movies = context.toprated.filter((m) => {  // New
+  const topRated = context.toprated.filter((m) => {  // New
     return !("watchlist" in m);
   });
 
   return (
     <PageTemplate
       title="Top Rated Movies"
-      movies={movies}  /* Changed */
-      action={(toprated) => {
-        return <AddToWatchListButton movie={toprated} />;
+      movies={topRated}  /* Changed */
+      action={(movie) => {
+        return <AddToWatchListButton movie={movie} />;
       }}
     />
   );

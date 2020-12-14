@@ -5,16 +5,16 @@ import AddToWatchListButton from "../components/buttons/addToWatchlist";
 
 const NowPlayingMovieListPage = () => {
   const context = useContext(MoviesContext);
-  const movies = context.nowplaying.filter((m) => {  // New
+  const nowPlaying = context.nowplaying.filter((m) => {  // New
     return !("watchlist" in m);
   });
 
   return (
     <PageTemplate
       title="Movies Now Playing"
-      movies={movies}  /* Changed */
-      action={(nowplaying) => {
-        return <AddToWatchListButton movie={nowplaying} />;
+      movies={nowPlaying}  /* Changed */
+      action={(movie) => {
+        return <AddToWatchListButton movie={movie} />;
       }}
     />
   );

@@ -10,7 +10,9 @@ const reducer = (state, action) => {
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id ? { ...m, favorite: true } : m
         ),
-
+        upcoming: [...state.upcoming],
+        toprated: [...state.toprated],
+        nowplaying : [...state.nowplaying]
        
       };
 
@@ -19,6 +21,9 @@ const reducer = (state, action) => {
         upcoming: state.upcoming.map((m) =>
           m.id === action.payload.movie.id ? { ...m, watchlist: true } : m
         ), 
+        movies: [...state.movies],
+        toprated: [...state.toprated],
+        nowplaying : [...state.nowplaying]
       };
     
     case "load":
@@ -38,6 +43,8 @@ const reducer = (state, action) => {
             : m
         ),
         upcoming: [...state.upcoming],
+        toprated: [...state.toprated],
+        nowplaying : [...state.nowplaying],
       };
     default:
       return state;
